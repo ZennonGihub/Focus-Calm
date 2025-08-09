@@ -3,8 +3,7 @@ import config from "./../config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log(config);
-const uri = config.uriDb;
+const uri = process.env.URI_DB;
 
 export const connectDb = async () => {
   try {
