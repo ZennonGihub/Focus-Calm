@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express";
 import { connectDb } from "./db/db.js";
 import app from "./app.js";
 import { checkApiKey } from "./middlewares/auth.middleware.js";
+import passport from "./libs/index.passport.js";
 connectDb();
 
 const swaggerDocument = YAML.load("./openapi.yaml");
