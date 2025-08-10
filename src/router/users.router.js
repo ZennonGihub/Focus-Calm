@@ -1,10 +1,16 @@
 import express from "express";
-import { findUser, find, remove } from "./../controllers/users.controller.js";
+import {
+  findUser,
+  find,
+  remove,
+  changeUser,
+} from "./../controllers/users.controller.js";
 
 const router = express.Router();
 
 router.get("/findUser/:id", findUser);
 router.get("/", find);
+router.patch("/changeUser/:id", changeUser);
 router.delete("/removedAccount/:id", remove);
 
 export default router;

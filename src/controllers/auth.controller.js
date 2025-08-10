@@ -21,26 +21,10 @@ export const register = async (req, res, next) => {
       updatedAt: userReturn.updatedAt,
     });
   } catch (error) {
-    console.log("Este es mi body: ", req.body);
     next(error);
   }
 };
 
 export const login = (req, res) => {
   //
-};
-
-export const changeUser = async (req, res, next) => {
-  const { id } = req.params;
-  const body = req.body;
-  try {
-    const newUser = {
-      id,
-      ...body,
-    };
-    const userReturn = await newUser.save();
-    res.status(201).json(newUser);
-  } catch (error) {
-    next(error);
-  }
 };
