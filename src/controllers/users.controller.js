@@ -1,13 +1,11 @@
-import boom from "@hapi/boom";
-import User from "../models/users.model.js";
+import Service from "./../services/users.service.js";
+
+const userService = new Service();
 
 export const findUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const user = await User.findById(id);
-    if (!user) {
-      throw boom.notFound(`User Not Found`);
-    }
+    const user = await userService.findOne(id);
     res.status(201).json({ user });
   } catch (error) {
     next(error);
@@ -16,10 +14,7 @@ export const findUser = async (req, res, next) => {
 
 export const find = async (req, res, next) => {
   try {
-    const users = await User.find().lean();
-    if (users.length === 0) {
-      console.log("No users");
-    }
+    const users = await userService.find();
     res.status(201).json({ users });
   } catch (error) {
     next(error);
@@ -30,10 +25,7 @@ export const changeUser = async (req, res, next) => {
   const { id } = req.params;
   const body = req.body;
   try {
-    const newUser = await User.findByIdAndUpdate(id, body, { new: true });
-    if (!newUser) {
-      console.log("user not found");
-    }
+    const newUser = await userService.changeUser(id, body);
     res.status(201).json(newUser);
   } catch (error) {
     next(error);
@@ -41,11 +33,8 @@ export const changeUser = async (req, res, next) => {
 };
 export const remove = async (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
   try {
-    const user = await User.findById(id);
-    console.log(user);
-    const userRemoved = await User.deleteOne(user._id);
+    const userRemoved = await userService.remove(id);
     res.status(200).json(userRemoved);
   } catch (error) {
     next(error);

@@ -1,32 +1,14 @@
-import User from "../models/users.model.js";
-import bcrypt from "bcryptjs";
-import boom from "@hapi/boom";
-import { createAccesToken } from "./../libs/jwt.token.js";
+import passport from "passport";
+import Service from "./../services/auth.service.js";
+
+const user = new Service();
 
 export const register = async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
-    const userEmail = findeOne({ email });
-    if (!userEmail) {
-      throw boom.conflict("email already in used");
-    }
-    const passwordHash = await bcrypt.hash(password, 10);
-
-    const newUser = new User({
+    res.status(201).json({
       username,
       email,
-      password: passwordHash,
-    });
-
-    const userReturn = await newUser.save();
-    const token = await createAccesToken({ id: userReturn._id });
-    res.cookie("token", token, { httpOnly: true });
-    res.status(201).json({
-      id: userReturn._id,
-      username: userReturn.username,
-      email: userReturn.email,
-      createdAt: userReturn.createdAt,
-      updatedAt: userReturn.updatedAt,
     });
   } catch (error) {
     next(error);
