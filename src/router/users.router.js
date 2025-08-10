@@ -5,8 +5,10 @@ import {
   remove,
   changeUser,
 } from "./../controllers/users.controller.js";
+import { checkApiKey } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
+router.use(checkApiKey);
 
 router.get("/findUser/:id", findUser);
 router.get("/", find);

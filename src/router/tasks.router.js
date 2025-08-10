@@ -6,8 +6,10 @@ import {
   remove,
   createTask,
 } from "./../controllers/tasks.controller.js";
+import { checkApiKey } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
+router.use(checkApiKey);
 
 router.get("/findtask/:id", findTask);
 router.get("/", find);
