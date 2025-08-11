@@ -1,22 +1,21 @@
-import passport from "passport";
 import Service from "./../services/auth.service.js";
 
-const user = new Service();
+const service = new Service();
 
 export const register = async (req, res, next) => {
   const { username, email, password } = req.body;
   try {
-    res.status(201).json({
-      username,
-      email,
+    const { user, token } = service.register(req.body);
+    res.cookie("token", token, {
+      httpOnly: true,
     });
+    res.status(201).json(user);
   } catch (error) {
     next(error);
   }
 };
 
-export const login = passport.authenticate("local", { session: false });
-async (req, res, next) => {
+export const login = async (req, res, next) => {
   try {
     const user = req.user;
     const token = createAccesToken({ id: user._id });

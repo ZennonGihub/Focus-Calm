@@ -6,23 +6,26 @@ import { createAccesToken } from "./../libs/jwt.token.js";
 class AuthServices {
   constructor() {}
   async register(body) {
-    const { email } = body;
-    if (!email) {
+    const emailFound = await User.findOne({ email: body.email });
+    if (emailFound) {
       throw boom.conflict("email already in used");
     }
-    const passwordHash = bcrypt.hash(body.password, 10);
+    const passwordHash = await bcrypt.hash(body.password, 10);
     const newUser = {
       ...body,
       password: passwordHash,
     };
-    const userReturn = await newUser.save();
-    const token = await createAccesToken({
+    const userReturn = await User.create(newUser);
+    console.log("NewUser", newUser);
+    console.log("UserReturn", userReturn);
+    const token = createAccesToken({
       id: userReturn._id,
       role: userReturn.role,
     });
-    res.cookie("token", token, { httpOnly: true });
-    delete userReturn.dataValues.password;
-    return userReturn;
+    const userObject = userReturn.toObject();
+    delete userObject.password;
+    console.log(userObject);
+    return { user: userObject, token };
   }
 
   async login(id) {

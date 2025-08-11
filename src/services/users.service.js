@@ -1,10 +1,11 @@
 import boom from "@hapi/boom";
 import User from "./../models/users.model.js";
+import config from "./../config.js";
 
 class UserServices {
   constructor() {}
   async find() {
-    return User.find();
+    return User.find().lean();
   }
 
   async findOne(id) {
@@ -15,7 +16,7 @@ class UserServices {
     return userFound;
   }
   async change(id, body) {
-    const userFound = await this.getOne(id);
+    const userFound = await this.findOne(id);
     if (!userFound) {
       throw boom.notFound("not users");
     }
@@ -24,11 +25,12 @@ class UserServices {
     return rta;
   }
   async remove(id) {
-    const userFound = await this.getOne(id);
+    console.log(config);
+    const userFound = await this.findOne(id);
     if (!userFound) {
       throw boom.notFound("user not found");
     }
-    const rta = await userFound.remove();
+    const rta = await User.deleteOne(userFound);
     return rta;
   }
 }
