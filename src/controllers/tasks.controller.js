@@ -23,7 +23,13 @@ export const find = async (req, res, next) => {
 
 export const createTask = async (req, res, next) => {
   try {
-    const savedTask = await service.create(req.body);
+    const task = {
+      ...req.body,
+      userId: req.user.id,
+    };
+    console.log("Req.User:", req.user);
+    console.log("Task to create:", task);
+    const savedTask = await service.create(task);
     res.status(201).json(savedTask);
   } catch (error) {
     next(error);

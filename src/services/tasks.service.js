@@ -7,6 +7,10 @@ class TasksServices {
     if (body.title === undefined || body.description === undefined) {
       throw boom.badRequest("missing data");
     }
+    const newBody = {
+      ...body,
+      userId: body.userId || null,
+    };
     const newTask = await Task.create(body);
     const taskObject = newTask.toObject();
     return taskObject;

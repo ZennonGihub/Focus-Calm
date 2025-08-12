@@ -5,9 +5,10 @@ import config from "./../config.js";
 
 export async function createAccesToken(user) {
   const payload = {
-    sub: user._id,
+    id: user.id,
     role: user.role,
   };
+  console.log("User Payload:", user);
   const token = jwt.sign(payload, process.env.SECRET_KEY, {
     expiresIn: "15m",
   });
