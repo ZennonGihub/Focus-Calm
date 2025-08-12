@@ -3,13 +3,16 @@ import Service from "./../services/auth.service.js";
 const service = new Service();
 
 export const register = async (req, res, next) => {
-  const { username, email, password } = req.body;
   try {
-    const { user, token } = service.register(req.body);
+    const body = req.body;
+    const { user, token, refreshToken } = await service.register(body);
     res.cookie("token", token, {
       httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      maxAge: 15 * 60 * 1000,
     });
-    res.status(201).json(user);
+    res.status(201).json({ token, refreshToken, user });
   } catch (error) {
     next(error);
   }
@@ -18,6 +21,17 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const user = req.user;
-    const token = createAccesToken({ id: user._id });
-  } catch (error) {}
+    const { token, refreshToken } = await service.login(user);
+    console.log("Token", token);
+    console.log("Refresh Token", refreshToken);
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+      maxAge: 15 * 60 * 1000,
+    });
+    res.status(201).json({ token, refreshToken });
+  } catch (error) {
+    next(error);
+  }
 };

@@ -6,8 +6,9 @@ import { createAccesToken } from "./../libs/jwt.token.js";
 class AuthServices {
   constructor() {}
   async register(body) {
-    const emailFound = await User.findOne({ email: body.email });
-    if (emailFound) {
+    const { email } = body;
+    const emailFound = await User.findOne({ email: email });
+    if (emailFound !== null) {
       throw boom.conflict("email already in used");
     }
     const passwordHash = await bcrypt.hash(body.password, 10);
@@ -16,24 +17,21 @@ class AuthServices {
       password: passwordHash,
     };
     const userReturn = await User.create(newUser);
-    console.log("NewUser", newUser);
-    console.log("UserReturn", userReturn);
-    const token = createAccesToken({
+    const { token, refreshToken } = createAccesToken({
       id: userReturn._id,
       role: userReturn.role,
     });
     const userObject = userReturn.toObject();
     delete userObject.password;
-    console.log(userObject);
-    return { user: userObject, token };
+    return { userObject, token, refreshToken };
   }
 
-  async login(id) {
-    const userFound = await User.findById(id);
-    if (!userFound) {
-      throw boom.notFound("user not found");
-    }
-    return userFound;
+  async login(user) {
+    const token = createAccesToken({
+      id: user._id,
+      role: user.role,
+    });
+    return token;
   }
 }
 
