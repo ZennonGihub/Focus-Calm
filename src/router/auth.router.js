@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { register, login } from "./../controllers/auth.controller.js";
+import { register, login, profile } from "./../controllers/auth.controller.js";
 
 const router = express.Router();
 
@@ -11,4 +11,9 @@ router.post(
   login
 );
 
+router.get(
+  "/profile",
+  passport.authenticate("jwt", { session: false }),
+  profile
+);
 export default router;

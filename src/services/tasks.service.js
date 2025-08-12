@@ -20,7 +20,7 @@ class TasksServices {
   async findOne(id) {
     const task = await Task.findById(id);
     if (!task) {
-      throw boom.notFound("task not found");
+      throw boom.notFound("ta sk not found");
     }
     return task;
   }
