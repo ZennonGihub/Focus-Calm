@@ -13,7 +13,7 @@ router.use(checkApiKey);
 
 router.get("/findtask/:id", findTask);
 router.get("/", find);
-router.post("/createtask/:id", createTask);
+router.post("/createtask", createTask);
 router.patch("/changetask/:id", changeTask);
 router.delete("/removedtask/:id", remove);
 
