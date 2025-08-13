@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport";
 import {
   findUser,
   find,
@@ -10,7 +11,8 @@ import {
   getUserIdSchema,
   deleteUser,
 } from "./../schemas/users.schema.js";
-import validarHandler from "./../middlewares/validator.middleware.js";
+import { checkRoles } from "../middlewares/auth.middleware.js";
+import validarHandler from "./../middlewares/validatorHandler.middleware.js";
 import { checkApiKey } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();

@@ -16,7 +16,6 @@ export const createTaskSchema = joi
     description: description,
     completed: completed,
     status: status,
-    userId: userId,
   })
   .options({ allowUnknown: false });
 

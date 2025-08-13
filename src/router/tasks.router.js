@@ -6,7 +6,7 @@ import {
   remove,
   createTask,
 } from "./../controllers/tasks.controller.js";
-import validarHandler from "../middlewares/validar.middleware.js";
+import validarHandler from "./../middlewares/validatorHandler.middleware.js";
 import {
   createTaskSchema,
   getTaskIdSchema,

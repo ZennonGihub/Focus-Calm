@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import validarHandler from "../middlewares/validar.middleware.js";
+import validarHandler from "./../middlewares/validatorHandler.middleware.js";
 import {
   createTimer,
   startTimer,
@@ -11,6 +11,10 @@ import {
 } from "./../controllers/timer.controller.js";
 import { checkApiKey } from "../middlewares/auth.middleware.js";
 import { checkRoles } from "../middlewares/auth.middleware.js";
+import {
+  createTimerSchema,
+  timerIdParamSchema,
+} from "./../schemas/timer.schema.js";
 
 const router = express.Router();
 router.use(checkApiKey);

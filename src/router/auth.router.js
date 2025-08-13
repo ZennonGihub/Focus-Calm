@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 import { register, login, profile } from "./../controllers/auth.controller.js";
 import { checkApiKey } from "../middlewares/auth.middleware.js";
-import { validarHandler } from "../middlewares/validar.middleware.js";
+import validarHandler from "./../middlewares/validatorHandler.middleware.js";
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 
 const router = express.Router();
