@@ -30,8 +30,8 @@ const timerSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["active", "paused", "completed", "finished"],
-      default: "active",
+      enum: ["active", "paused", "finished"],
+      default: "paused",
     },
     type: {
       type: String,

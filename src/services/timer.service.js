@@ -7,6 +7,13 @@ class TimerService {
     return timerSaved;
   }
   async startTimer(timerId) {
+    const timerFound = await timerSchema.findById(timerId);
+    if (!timerFound) {
+      throw boom.notFound("Timer not found");
+    }
+    if (timerFound.status === "active") {
+      throw boom.badRequest("Timer is not paused");
+    }
     const timer = await timerSchema.findByIdAndUpdate(
       timerId,
       {
@@ -15,9 +22,6 @@ class TimerService {
       },
       { new: true }
     );
-    if (!timer) {
-      throw boom.notFound("Timer not found");
-    }
     return timer;
   }
   async pauseTimer(timerId) {
@@ -25,7 +29,7 @@ class TimerService {
     if (!timer) {
       throw boom.notFound("Timer not found");
     }
-    if (timer.isPaused) {
+    if (timer.status === "paused") {
       throw boom.badRequest("Timer is already paused");
     }
     // calcular el tiempo restante previo si existe, o del tiempo original
@@ -52,7 +56,7 @@ class TimerService {
     if (!timer) {
       throw boom.notFound("Timer not found");
     }
-    if (!timer.status === "active") {
+    if (timer.status === "active") {
       throw boom.badRequest("Timer is not paused");
     }
     const timerUpdated = await timerSchema.findByIdAndUpdate(
