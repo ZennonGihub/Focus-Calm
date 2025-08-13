@@ -106,3 +106,5 @@ class TimerService {
     return timer;
   }
 }
+
+export default TimerService;

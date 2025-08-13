@@ -6,6 +6,13 @@ import {
   remove,
   createTask,
 } from "./../controllers/tasks.controller.js";
+import validarHandler from "../middlewares/validar.middleware.js";
+import {
+  createTaskSchema,
+  getTaskIdSchema,
+  updateTaskSchema,
+  deleteTaskIdSchema,
+} from "../schemas/tasks.schema.js";
 import { checkApiKey } from "../middlewares/auth.middleware.js";
 import passport from "passport";
 import { checkRoles } from "../middlewares/auth.middleware.js";
@@ -14,8 +21,9 @@ const router = express.Router();
 router.use(checkApiKey);
 
 router.get(
-  "/findtask/:id",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
+  validarHandler(getTaskIdSchema, "params"),
   checkRoles("free", "premium"),
   findTask
 );
@@ -26,20 +34,24 @@ router.get(
   find
 );
 router.post(
-  "/createtask",
+  "/",
   passport.authenticate("jwt", { session: false }),
+  validarHandler(createTaskSchema, "body"),
   checkRoles("free", "premium"),
   createTask
 );
 router.patch(
-  "/changetask/:id",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
+  validarHandler(getTaskIdSchema, "params"),
+  validarHandler(updateTaskSchema, "body"),
   checkRoles("free", "premium"),
   changeTask
 );
 router.delete(
-  "/removedtask/:id",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
+  validarHandler(deleteTaskIdSchema, "params"),
   checkRoles("free", "premium"),
   remove
 );
