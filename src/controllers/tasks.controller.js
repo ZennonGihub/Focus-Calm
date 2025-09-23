@@ -15,7 +15,7 @@ export const findTask = async (req, res, next) => {
 export const find = async (req, res, next) => {
   try {
     const tasks = await service.find();
-    res.status(201).json({ tasks });
+    res.status(201).json(tasks);
   } catch (error) {
     next(error);
   }
@@ -46,7 +46,7 @@ export const changeTask = async (req, res, next) => {
 };
 export const remove = async (req, res, next) => {
   try {
-    const removeTask = await service.remove(req.params.id, req.body);
+    const removeTask = await service.delete(req.params.id, req.body);
     res.status(200).json(removeTask);
   } catch (error) {
     next(error);

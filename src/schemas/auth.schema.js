@@ -10,7 +10,7 @@ const email = joi.string().email({ minDomainSegments: 2 });
 const role = joi.string().valid("free", "premium");
 
 export const registerSchema = joi.object({
-  name: name.required(),
+  name: name,
   email: email.required(),
   password: password.required(),
   role: role,
@@ -18,5 +18,5 @@ export const registerSchema = joi.object({
 
 export const loginSchema = joi.object({
   email: email.required(),
-  password: password.required(),
+  password: joi.string().required(),
 });

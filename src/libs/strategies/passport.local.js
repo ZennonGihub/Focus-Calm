@@ -6,20 +6,21 @@ import User from "./../../models/users.model.js";
 const localStrategy = new Strategy(
   {
     usernameField: "email",
+    passwordField: "password",
   },
   async (email, password, done) => {
     try {
       const user = await User.findOne({ email });
+
       if (!user) {
-        done(boom.unauthorized(), false);
+        return done(boom.unauthorized("Usuario o contraseña inválidos"), false);
       }
+
       const compare = await bcrypt.compare(password, user.password);
       if (!compare) {
-        done(boom.unauthorized(), false);
+        return done(boom.unauthorized("Usuario o contraseña inválidos"), false);
       }
-      const userClean = { ...user.toObject() };
-      delete userClean.password;
-      done(null, userClean);
+      return done(null, user);
     } catch (error) {
       done(error, false);
     }

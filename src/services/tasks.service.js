@@ -4,14 +4,14 @@ import Task from "./../models/tasks.model.js";
 class TasksServices {
   constructor() {}
   async create(body) {
-    if (body.title === undefined || body.description === undefined) {
+    if (body === undefined) {
       throw boom.badRequest("missing data");
     }
     const newBody = {
       ...body,
       userId: body.userId || null,
     };
-    const newTask = await Task.create(body);
+    const newTask = await Task.create(newBody);
     const taskObject = newTask.toObject();
     return taskObject;
   }
@@ -24,7 +24,7 @@ class TasksServices {
   async findOne(id) {
     const task = await Task.findById(id);
     if (!task) {
-      throw boom.notFound("ta sk not found");
+      throw boom.notFound("task not found");
     }
     return task;
   }

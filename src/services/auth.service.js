@@ -1,6 +1,7 @@
 import boom from "@hapi/boom";
 import User from "./../models/users.model.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { createAccesToken } from "./../libs/jwt.token.js";
 
 class AuthServices {
@@ -17,7 +18,7 @@ class AuthServices {
       password: passwordHash,
     };
     const userReturn = await User.create(newUser);
-    const { token, refreshToken } = createAccesToken({
+    const { token, refreshToken } = await createAccesToken({
       id: userReturn._id,
       role: userReturn.role,
     });
@@ -27,11 +28,27 @@ class AuthServices {
   }
 
   async login(user) {
-    const token = createAccesToken({
-      id: user._id,
+    const { token, refreshToken } = await createAccesToken({
+      id: user._id.toString(),
       role: user.role,
     });
-    return token;
+    return { token, refreshToken };
+  }
+  async refresh(refreshToken) {
+    try {
+      const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH);
+      const user = {
+        _id: payload.id,
+        role: payload.role,
+      };
+      const newTokens = await createAccesToken(user);
+      return {
+        token: newTokens.token,
+        refreshToken: newTokens.refreshToken,
+      };
+    } catch (error) {
+      throw boom.unauthorized("Token de refresco inválido o expirado.");
+    }
   }
 }
 

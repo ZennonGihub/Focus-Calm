@@ -1,25 +1,34 @@
 import express from "express";
 import passport from "passport";
-import { register, login, profile } from "./../controllers/auth.controller.js";
+import {
+  register,
+  login,
+  profile,
+  refresh,
+} from "./../controllers/auth.controller.js";
 import { checkApiKey } from "../middlewares/auth.middleware.js";
 import validarHandler from "./../middlewares/validatorHandler.middleware.js";
 import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 
 const router = express.Router();
+
 router.use(checkApiKey);
 
-router.post("/register", register);
+router.post("/register", validarHandler(registerSchema, "body"), register);
+
 router.post(
   "/login",
-  passport.authenticate("local", { session: false }),
   validarHandler(loginSchema, "body"),
+  passport.authenticate("local", { session: false }),
   login
 );
 
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
-  validarHandler(registerSchema, "body"),
   profile
 );
+
+router.post("/refresh", refresh);
+
 export default router;

@@ -13,6 +13,10 @@ const swaggerDocument = YAML.load("./openapi.yaml");
 
 app.use(checkApiKey);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.listen(config.port, () => {
+app.listen(config.port, "0.0.0.0", () => {
   console.log(`Servidor corriendo en el puerto: ${config.port}`);
+  console.log(process.env.SECRET_KEY);
+  console.log(config.refreshToken);
+  console.log(config.secretKey);
+  console.log(config.uriDb);
 });
