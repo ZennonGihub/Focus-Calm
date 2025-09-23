@@ -12,7 +12,7 @@ connectDb();
 const swaggerDocument = YAML.load("./openapi.yaml");
 
 app.get("/", (req, res) => {
-  res.send(<h1>Welcome to api</h1>);
+  res.json({ message: "Welcome to your API!", version: "1.0.0" });
 });
 
 app.use(checkApiKey);
