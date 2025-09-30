@@ -3,7 +3,7 @@ dotenv.config();
 
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
-import { connectDb } from "./../src/db/db.js";
+import { connectDb } from "../src/db/db.js";
 import app from "../src/app.js";
 import { checkApiKey } from "./../src/middlewares/auth.middleware.js";
 
