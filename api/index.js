@@ -4,9 +4,9 @@ dotenv.config();
 
 import YAML from "yamljs";
 import swaggerUi from "swagger-ui-express";
-import { connectDb } from "./db/db.js";
-import app from "./app.js";
-import { checkApiKey } from "./middlewares/auth.middleware.js";
+import { connectDb } from "./../src/db/db.js";
+import app from "../src/app.js";
+import { checkApiKey } from "./../src/middlewares/auth.middleware.js";
 
 connectDb();
 
