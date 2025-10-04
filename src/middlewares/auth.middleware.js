@@ -2,10 +2,12 @@ import boom from "@hapi/boom";
 import config from "./../config.js";
 
 export function checkApiKey(req, res, next) {
-  const apiKey = req.header["apiKey"];
-  if (config.apiKey === apiKey) {
-    next();
-  } else {
+  const apiKey = req.header["api"];
+  try {
+    if (config.apiKey === apiKey) {
+      next();
+    }
+  } catch (error) {
     throw boom.unauthorized(`You are not authorized`);
   }
 }
