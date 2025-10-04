@@ -8,7 +8,6 @@ import timer from "./timer.router.js";
 export default function routerApi(app) {
   const router = express.Router();
   router.use(checkApiKey);
-
   app.use("/api/v1", router);
   router.use("/auth", auth);
   router.use("/users", users);
