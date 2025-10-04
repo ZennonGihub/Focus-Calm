@@ -15,6 +15,7 @@ export const findUser = async (req, res, next) => {
 export const find = async (req, res, next) => {
   try {
     const users = await userService.find();
+    console.log("Estos son los usuarios", users);
     res.status(201).json({ users });
   } catch (error) {
     next(error);
