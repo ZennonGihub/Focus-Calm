@@ -34,6 +34,7 @@ class AuthServices {
     });
     return { token, refreshToken };
   }
+
   async refresh(refreshToken) {
     try {
       const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH);

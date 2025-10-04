@@ -15,7 +15,6 @@ const localStrategy = new Strategy(
       if (!user) {
         return done(boom.unauthorized("Usuario o contraseña inválidos"), false);
       }
-
       const compare = await bcrypt.compare(password, user.password);
       if (!compare) {
         return done(boom.unauthorized("Usuario o contraseña inválidos"), false);

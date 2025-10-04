@@ -30,13 +30,11 @@ class TasksServices {
   }
 
   async update(id, changes) {
-    const task = await this.findOne(id);
     const rta = await Task.findByIdAndUpdate(id, changes, { new: true });
     return rta;
   }
 
   async delete(id) {
-    const task = await this.findOne(id);
     await Task.findByIdAndDelete(id);
     return { id };
   }

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import config from "./../config.js";
 import dotenv from "dotenv";
 dotenv.config();
 
