@@ -13,10 +13,8 @@ import {
 } from "./../schemas/users.schema.js";
 import { checkRoles } from "../middlewares/auth.middleware.js";
 import validarHandler from "./../middlewares/validatorHandler.middleware.js";
-import { checkApiKey } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
-router.use(checkApiKey);
 
 router.get(
   "/:id",

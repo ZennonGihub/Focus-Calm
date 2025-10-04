@@ -9,7 +9,6 @@ import {
   getTimerStatus,
   deleteTimer,
 } from "./../controllers/timer.controller.js";
-import { checkApiKey } from "../middlewares/auth.middleware.js";
 import { checkRoles } from "../middlewares/auth.middleware.js";
 import {
   createTimerSchema,
@@ -17,7 +16,6 @@ import {
 } from "./../schemas/timer.schema.js";
 
 const router = express.Router();
-router.use(checkApiKey);
 
 router.post(
   "/",

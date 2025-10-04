@@ -13,12 +13,10 @@ import {
   updateTaskSchema,
   deleteTaskIdSchema,
 } from "../schemas/tasks.schema.js";
-import { checkApiKey } from "../middlewares/auth.middleware.js";
 import passport from "passport";
 import { checkRoles } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
-router.use(checkApiKey);
 
 router.get(
   "/:id",
