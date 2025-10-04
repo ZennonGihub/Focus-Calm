@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import { connectDb } from "../src/db/db.js";
 import app from "../src/app.js";
 
+const app = app;
 connectDb();
 
 const swaggerDocument = YAML.load("./openapi.yaml");
