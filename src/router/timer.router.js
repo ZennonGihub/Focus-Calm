@@ -1,4 +1,4 @@
-/*import express from "express";
+import express from "express";
 import passport from "passport";
 import validarHandler from "./../middlewares/validatorHandler.middleware.js";
 import {
@@ -62,4 +62,3 @@ router.delete(
 );
 
 export default router;
-*/

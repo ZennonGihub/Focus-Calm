@@ -1,4 +1,4 @@
-/*import Service from "./../services/timer.service.js";
+import Service from "./../services/timer.service.js";
 
 const service = new Service();
 
@@ -56,4 +56,3 @@ export const deleteTimer = async (req, res, next) => {
     next(error);
   }
 };
-*/
