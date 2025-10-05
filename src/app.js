@@ -1,12 +1,12 @@
-import dotenv from "dotenv";
-dotenv.config();
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import routerApi from "./router/index.router.js";
+import { connectDb } from "./db/db.js";
 
 const app = express();
+app.use(connectDb);
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
