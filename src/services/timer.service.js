@@ -1,5 +1,6 @@
 import timerSchema from "../models/timer.model.js";
 
+/*
 class TimerService {
   async createTimer(userId, taskId, type, duration) {
     const timerData = { userId, taskId, type, duration };
@@ -106,5 +107,5 @@ class TimerService {
     return timer;
   }
 }
-
+*/
 export default TimerService;

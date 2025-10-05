@@ -1,22 +1,33 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
 const uri = process.env.URI_DB;
-// Temporalmente, dentro de tu archivo de conexión:
+const dbName = "DbPomodoro";
 
-console.log(
-  "URI_DB cargada (solo mostrar los primeros 20 caracteres):",
-  uri ? uri.substring(0, 20) : "URI NO CARGADA"
-);
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
 export const connectDb = async () => {
-  try {
-    await mongoose.connect(uri, {
-      dbName: "DbPomodoro",
-    });
-    console.log(`Connected to the database`);
-  } catch (error) {
-    console.log(error);
+  if (!uri) {
+    throw new Error("URI_DB no está definida en las variables de entorno.");
   }
+  if (cached.conn) {
+    console.log("Using cached DB connection.");
+    return cached.conn;
+  }
+  if (!cached.promise) {
+    const opts = {
+      dbName: dbName,
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
+      console.log("DB connection established.");
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
 };
