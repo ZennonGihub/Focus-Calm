@@ -6,7 +6,19 @@ import routerApi from "./router/index.router.js";
 import { connectDb } from "./db/db.js";
 
 const app = express();
-app.use(connectDb);
+
+const connectDBMiddleware = async (req, res, next) => {
+  try {
+    await connectDb();
+    next();
+  } catch (error) {
+    console.error("Error en el middleware de DB:", error);
+    res.status(500).json({ message: "Database connection failed." });
+  }
+};
+
+app.use(connectDBMiddleware);
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
