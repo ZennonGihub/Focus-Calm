@@ -8,6 +8,4 @@ app.get("/", (req, res) => {
   res.json({ message: "API FOCUS CALM", version: "1.0.0" });
 });
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
 export default app;

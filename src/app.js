@@ -33,6 +33,8 @@ const connectDBMiddleware = async (req, res, next) => {
 };
 app.use(connectDBMiddleware);
 
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 routerApi(app);
 
 export default app;
