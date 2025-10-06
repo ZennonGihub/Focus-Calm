@@ -4,7 +4,7 @@ import config from "./../config.js";
 
 class UserServices {
   constructor() {}
-  async find() {
+  async findUsers() {
     return User.find().lean();
   }
 

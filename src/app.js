@@ -18,6 +18,7 @@ const options = {
 };
 app.use(cors(options));
 
+app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
