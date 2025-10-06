@@ -4,6 +4,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import routerApi from "./router/index.router.js";
 import { connectDb } from "./db/db.js";
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
+
+const swaggerDocument = YAML.load("./openapi.yaml");
+
 const app = express();
 
 const whitelist = ["http://127.0.0.1:5500", "https://focuscalm.vercel.app"];
