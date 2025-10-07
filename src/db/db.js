@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const uri = process.env.URI_DB;
+console.log("Database URI:", uri);
 const dbName = "DbPomodoro";
 
 let cached = global.mongoose;
