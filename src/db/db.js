@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 
 const uri = process.env.URI_DB;
 console.log("Database URI:", uri);
-const dbName = "DbPomodoro";
-
+const dbName = "focusCalm";
 let cached = global.mongoose;
 
 if (!cached) {
@@ -12,6 +11,7 @@ if (!cached) {
 
 export const connectDb = async () => {
   if (!uri) {
+    console.log("Esta es la url", uri);
     throw new Error("URI_DB no está definida en las variables de entorno.");
   }
   if (cached.conn) {
