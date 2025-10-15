@@ -4,8 +4,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import routerApi from "./router/index.router.js";
 import { connectDb } from "./db/db.js";
-connectDb();
 const app = express();
+
+const dbConnection = async () => {
+  await connectDb();
+};
+
+dbConnection();
 
 const whitelist = ["http://127.0.0.1:5500", "https://focuscalm.vercel.app"];
 const options = {
