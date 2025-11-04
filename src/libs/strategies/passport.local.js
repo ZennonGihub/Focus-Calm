@@ -8,28 +8,33 @@ const localStrategy = new Strategy(
     passwordField: "password",
   },
   async (email, password, done) => {
+    console.log("[PASSPORT] Estrategia local iniciada");
+    console.log("[PASSPORT] Email recibido:", email);
+
     try {
-      console.log("1. Buscando usuario en la base de datos...");
+      console.log("[PASSPORT] Buscando usuario en DB...");
       const user = await User.findOne({ email });
-      console.log("2. Búsqueda de usuario finalizada.");
+      console.log(" [PASSPORT] Usuario encontrado:", user ? "SI" : "NO");
 
       if (!user) {
+        console.log("[PASSPORT] Usuario no encontrado, retornando false");
         return done(null, false, { message: "Usuario o contraseña inválidos" });
       }
 
-      console.log("3. Iniciando comparación de contraseña (bcrypt)...");
+      console.log(" [PASSPORT] Comparando contraseña...");
       const compare = await bcrypt.compare(password, user.password);
-      console.log("4. Comparación de contraseña finalizada.");
+      console.log(" [PASSPORT] Contraseña válida:", compare ? "SI" : "NO");
 
       if (!compare) {
+        console.log("[PASSPORT] Contraseña incorrecta, retornando false");
         return done(null, false, { message: "Usuario o contraseña inválidos" });
       }
+
+      console.log("[PASSPORT] Autenticación exitosa, retornando usuario");
       return done(null, user);
     } catch (error) {
-      console.error("Error en estrategia local:", error);
+      console.error("[PASSPORT] Error en estrategia:", error);
       return done(error, false);
     }
   }
 );
-
-export default localStrategy;
