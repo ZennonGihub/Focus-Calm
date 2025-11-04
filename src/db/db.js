@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const uri = process.env.URI_DB;
 console.log("Database URI:", uri);
-const dbName = "focusCalm";
+const dbName = "FocusCalm";
 let cached = global.mongoose;
 
 if (!cached) {

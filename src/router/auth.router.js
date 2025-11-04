@@ -12,13 +12,7 @@ import { registerSchema, loginSchema } from "../schemas/auth.schema.js";
 const router = express.Router();
 
 router.post("/register", validarHandler(registerSchema, "body"), register);
-
-router.post(
-  "/login",
-  validarHandler(loginSchema, "body"),
-  passport.authenticate("local", { session: false }),
-  login
-);
+router.post("/login", login);
 
 router.get(
   "/profile",

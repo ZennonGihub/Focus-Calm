@@ -4,7 +4,7 @@ const name = joi.string().alphanum().min(3).max(12);
 const password = joi
   .string()
   .pattern(
-    new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})")
+    new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_])(?=.{8,})")
   );
 const email = joi.string().email({ minDomainSegments: 2 });
 const role = joi.string().valid("free", "premium");

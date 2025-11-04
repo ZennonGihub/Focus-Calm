@@ -32,6 +32,7 @@ class AuthServices {
       id: user._id.toString(),
       role: user.role,
     });
+    console.log("Token: ", token);
     return { token, refreshToken };
   }
 
