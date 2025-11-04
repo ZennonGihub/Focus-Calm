@@ -1,5 +1,4 @@
 import { Strategy } from "passport-local";
-import boom from "@hapi/boom";
 import bcrypt from "bcryptjs";
 import User from "../../models/users.model.js";
 
@@ -15,7 +14,7 @@ const localStrategy = new Strategy(
       console.log("2. Búsqueda de usuario finalizada.");
 
       if (!user) {
-        return done(boom.unauthorized("Usuario o contraseña inválidos"), false);
+        return done(null, false, { message: "Usuario o contraseña inválidos" });
       }
 
       console.log("3. Iniciando comparación de contraseña (bcrypt)...");
@@ -23,12 +22,12 @@ const localStrategy = new Strategy(
       console.log("4. Comparación de contraseña finalizada.");
 
       if (!compare) {
-        return done(boom.unauthorized("Usuario o contraseña inválidos"), false);
+        return done(null, false, { message: "Usuario o contraseña inválidos" });
       }
-
       return done(null, user);
     } catch (error) {
-      done(error, false);
+      console.error("Error en estrategia local:", error);
+      return done(error, false);
     }
   }
 );
