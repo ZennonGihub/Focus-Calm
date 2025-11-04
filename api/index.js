@@ -8,7 +8,7 @@ app.get("/", (req, res) => {
   res.json({ message: "API FOCUS CALM", version: "1.0.0" });
 });
 
-app.listen(3000);
+//app.listen(3000);
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

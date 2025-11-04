@@ -1,4 +1,5 @@
 import Service from "./../services/auth.service.js";
+import boom from "@hapi/boom";
 
 const service = new Service();
 
@@ -23,6 +24,10 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const user = req.user;
+
+    if (!user) {
+      throw boom.badRequest("Credenciales incorrectas");
+    }
     const { token, refreshToken } = await service.login(user);
     console.log("Token", token);
     console.log("Refresh Token", refreshToken);

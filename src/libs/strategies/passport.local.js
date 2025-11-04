@@ -1,7 +1,7 @@
 import { Strategy } from "passport-local";
 import boom from "@hapi/boom";
 import bcrypt from "bcryptjs";
-import User from "./../../models/User.js";
+import User from "../../models/users.model.js";
 
 const localStrategy = new Strategy(
   {
