@@ -8,7 +8,16 @@ import { connectDb } from "./db/db.js";
 
 const app = express();
 
-await connectDb();
+let dbConnected = false;
+
+async function ensureDbConnection() {
+  if (!dbConnected) {
+    await connectDb();
+    dbConnected = true;
+  }
+}
+
+ensureDbConnection().catch(console.error);
 
 const whitelist = [
   "http://127.0.0.1:5500",
