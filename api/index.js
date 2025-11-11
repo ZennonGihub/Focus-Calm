@@ -1,24 +1,15 @@
+import YAML from "yamljs";
+import swaggerUi from "swagger-ui-express";
 import app from "../src/app.js";
-import { connectDb } from "../src/db/db.js";
 
-const PORT = process.env.PORT || 3000;
+const swaggerDocument = YAML.load("./openapi.yaml");
 
-async function startServer() {
-  try {
-    console.log("Attempting to connect to database...");
+app.get("/", (req, res) => {
+  res.json({ message: "API FOCUS CALM", version: "1.0.0" });
+});
 
-    await connectDb();
+app.listen(3000);
 
-    console.log("DB connection established successfully.");
-    app.listen(PORT, () => {
-      console.log(`Server listening on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("CRITICAL: DB Connection Error. Server not started.");
-    console.error(error);
-    process.exit(1);
-  }
-}
-startServer();
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 export default app;

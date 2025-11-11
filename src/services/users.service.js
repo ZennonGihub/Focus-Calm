@@ -25,7 +25,6 @@ class UserServices {
     return rta;
   }
   async remove(id) {
-    console.log(config);
     const userFound = await this.findOne(id);
     if (!userFound) {
       throw boom.notFound("user not found");

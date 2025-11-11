@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const uri = process.env.URI_DB;
-console.log("Database URI:", uri);
 const dbName = "DbPomodoro ";
 let cached = global.mongoose;
 
@@ -11,12 +10,10 @@ if (!cached) {
 
 export const connectDb = async () => {
   if (!uri) {
-    console.log("Esta es la url", uri);
     throw new Error("URI_DB no está definida en las variables de entorno.");
   }
 
   if (cached.conn) {
-    console.log("Using cached DB connection.");
     return cached.conn;
   }
 
@@ -33,7 +30,6 @@ export const connectDb = async () => {
     cached.promise = mongoose
       .connect(uri, opts)
       .then((mongoose) => {
-        console.log("DB connection established.");
         return mongoose;
       })
       .catch((error) => {

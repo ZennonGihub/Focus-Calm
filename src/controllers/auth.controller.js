@@ -13,8 +13,6 @@ export const register = async (req, res, next) => {
       secure: true,
       maxAge: 15 * 60 * 1000,
     });
-    console.log("Token:", token);
-    console.log("Refresh Token:", refreshToken);
     res.status(201).json({ token, refreshToken, user: userObject });
   } catch (error) {
     next(error);
@@ -29,8 +27,6 @@ export const login = async (req, res, next) => {
       throw boom.badRequest("Credenciales incorrectas");
     }
     const { token, refreshToken } = await service.login(user);
-    console.log("Token", token);
-    console.log("Refresh Token", refreshToken);
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "strict",

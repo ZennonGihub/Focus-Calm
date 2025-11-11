@@ -27,8 +27,6 @@ export const createTask = async (req, res, next) => {
       ...req.body,
       userId: req.user.id,
     };
-    console.log("Req.User:", req.user);
-    console.log("Task to create:", task);
     const savedTask = await service.create(task);
     res.status(201).json(savedTask);
   } catch (error) {
