@@ -25,8 +25,8 @@ export const connectDb = async () => {
     const opts = {
       dbName: dbName,
       bufferCommands: false,
-      serverSelectionTimeoutMS: 30000,
-      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 20000,
       connectTimeoutMS: 5000,
       maxPoolSize: 1,
       family: 4,
