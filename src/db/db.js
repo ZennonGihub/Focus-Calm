@@ -29,6 +29,7 @@ export const connectDb = async () => {
       socketTimeoutMS: 45000,
       connectTimeoutMS: 5000,
       maxPoolSize: 1,
+      family: 4,
     };
 
     cached.promise = mongoose
