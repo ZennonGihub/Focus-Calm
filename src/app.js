@@ -32,8 +32,7 @@ app.use(async (req, res, next) => {
     await connectDb();
     next();
   } catch (error) {
-    console.error("Error crítico de conexión DB en middleware:", error);
-    res.status(500).json({ error: "Database Connection Failed" });
+    res.status(500).json({ error: "Error de conexion con la base de datos" });
   }
 });
 
