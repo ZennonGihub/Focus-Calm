@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import boom from "@hapi/boom";
 import config from "../config.js";
-import { badData } from "@hapi/boom";
 
 const url = config.uriDb;
 const uri = process.env.URI_DB;
@@ -26,7 +25,7 @@ export const connectDb = async () => {
       dbName: dbName,
       bufferCommands: false,
       serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 20000,
+      socketTimeoutMS: 45000,
       connectTimeoutMS: 5000,
       maxPoolSize: 1,
       family: 4,
