@@ -6,10 +6,6 @@ const uri = process.env.URI_DB;
 const dbName = "DbPomodoro ";
 let cached = global.mongoose;
 
-console.log(config);
-console.log("Database URL from config:", url);
-console.log("URI_DB:", uri);
-
 if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
