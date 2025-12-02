@@ -1,36 +1,16 @@
 import express from "express";
-
 import morgan from "morgan";
-
 import cors from "cors";
-
 import cookieParser from "cookie-parser";
-
 import passport from "./libs/index.passport.js";
-
 import routerApi from "./router/index.router.js";
-
 import { connectDb } from "./db/db.js";
 
 const app = express();
 
-let dbConnected = false;
-
-async function ensureDbConnection() {
-  if (!dbConnected) {
-    await connectDb();
-
-    dbConnected = true;
-  }
-}
-
-ensureDbConnection().catch(console.error);
-
 const whitelist = [
   "http://127.0.0.1:5500",
-
   "https://focuscalm.vercel.app",
-
   "http://localhost:5173",
 ];
 
@@ -42,20 +22,25 @@ const options = {
       callback(new Error("no permitido"));
     }
   },
-
   credentials: true,
 };
 
 app.use(cors(options));
 
+app.use(async (req, res, next) => {
+  try {
+    await connectDb();
+    next();
+  } catch (error) {
+    console.error("Error crítico de conexión DB en middleware:", error);
+    res.status(500).json({ error: "Database Connection Failed" });
+  }
+});
+
 app.use(passport.initialize());
-
 app.use(express.static("public"));
-
 app.use(express.json());
-
 app.use(cookieParser());
-
 app.use(morgan("dev"));
 
 routerApi(app);
