@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import boom from "@hapi/boom";
 import config from "../config.js";
+import { badData } from "@hapi/boom";
 
 const url = config.uriDb;
 const uri = process.env.URI_DB;
-const dbName = "DbPomodoro ";
+const dbName = "DbPomodoro";
 let cached = global.mongoose;
 
 if (!cached) {
@@ -12,7 +14,7 @@ if (!cached) {
 
 export const connectDb = async () => {
   if (!uri) {
-    throw new Error("URI_DB no está definida en las variables de entorno.");
+    throw boom.badData("URI_DB no está definida en las variables de entorno.");
   }
 
   if (cached.conn) {
@@ -23,8 +25,8 @@ export const connectDb = async () => {
     const opts = {
       dbName: dbName,
       bufferCommands: false,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 20000,
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
       connectTimeoutMS: 5000,
       maxPoolSize: 1,
     };
